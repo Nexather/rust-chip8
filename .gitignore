@@ -12,3 +12,8 @@
 /wasm/target/
 /wasm/Cargo.lock
 
+/wasm/pkg/package.json
+/wasm/pkg/wasm.d.ts
+/wasm/pkg/wasm.js
+/wasm/pkg/wasm_bg.wasm
+/wasm/pkg/wasm_bg.wasm.d.ts

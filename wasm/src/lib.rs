@@ -1,18 +1,33 @@
 use chip8_core::*;
 use js_sys::Uint8Array;
 use wasm_bindgen::prelude::*;
-use web_sys::KeyboardEvent;
+use web_sys::{CanvasRenderingContext2d, HtmlCanvasElement, KeyboardEvent};
 
 #[wasm_bindgen]
 pub struct EmuWasm {
     chip8: Emu,
+    ctx: CanvasRenderingContext2d,
 }
 
 #[wasm_bindgen]
 impl EmuWasm {
     #[wasm_bindgen(constructor)]
-    pub fn new() -> EmuWasm {
-        EmuWas { chip8: Emu::new() }
+    pub fn new() -> Result<EmuWasm, JsValue> {
+        let chip8 = Emu::new();
+
+        let document = web_sys::window().unwrap().document().unwrap();
+        let canvas = document.get_element_by_id("canvas").unwrap();
+        let canvas: HtmlCanvasElement = canvas
+            .dyn_into::<HtmlCanvasElement>()
+            .map_err(|_| ())
+            .unwrap();
+        let ctx = canvas
+            .get_context("2d")
+            .unwrap()
+            .unwrap()
+            .dyn_into::<CanvasRenderingContext2d>()
+            .unwrap();
+        Ok(EmuWasm { chip8, ctx })
     }
 
     #[wasm_bindgen]
@@ -45,11 +60,23 @@ impl EmuWasm {
 
     #[wasm_bindgen]
     pub fn draw_screen(&mut self, scale: usize) {
-        //TODO
+        let disp = self.chip8.get_display();
+        for i in 0..(SCREEN_WIDTH * SCREEN_HEIGHT) {
+            if disp[i] {
+                let x = i % SCREEN_WIDTH;
+                let y = i % SCREEN_HEIGHT;
+                self.ctx.fill_rect(
+                    (x * scale) as f64,
+                    (y * scale) as f64,
+                    scale as f64,
+                    scale as f64,
+                );
+            }
+        }
     }
 }
 
-fn key2btn(key: Keycode) -> Option<usize> {
+fn key2btn(key: &str) -> Option<usize> {
     match key {
         "1" => Some(0x1),
         "2" => Some(0x2),
