@@ -65,7 +65,7 @@ impl EmuWasm {
         for i in 0..(SCREEN_WIDTH * SCREEN_HEIGHT) {
             if disp[i] {
                 let x = i % SCREEN_WIDTH;
-                let y = i / SCREEN_HEIGHT;
+                let y = i / SCREEN_WIDTH;
                 self.ctx.fill_rect(
                     (x * scale) as f64,
                     (y * scale) as f64,
