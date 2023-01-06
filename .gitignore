@@ -17,3 +17,5 @@
 /wasm/pkg/wasm.js
 /wasm/pkg/wasm_bg.wasm
 /wasm/pkg/wasm_bg.wasm.d.ts
+/web/wasm_bg.wasm
+/web/wasm.js
