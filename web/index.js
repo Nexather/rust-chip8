@@ -41,7 +41,7 @@ async function run(){
         //Load in new game as Uint8Array, send to .wasm, start main loop
         let fr = new FileReader()
         fr.onload = function(e){
-            let bueffer = fr.result
+            let buffer = fr.result
             const rom = new Uint8Array(buffer)
             chip8.reset()
             chip8.load_game(rom)
