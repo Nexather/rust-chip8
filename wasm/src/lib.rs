@@ -1,6 +1,7 @@
 use chip8_core::*;
 use js_sys::Uint8Array;
 use wasm_bindgen::prelude::*;
+use wasm_bindgen::JsCast;
 use web_sys::{CanvasRenderingContext2d, HtmlCanvasElement, KeyboardEvent};
 
 #[wasm_bindgen]
