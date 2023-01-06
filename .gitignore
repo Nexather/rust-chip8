@@ -9,4 +9,6 @@
 /chip8_core/Cargo.lock
 /chip8_core/target/
 /desktop/target/
+/wasm/target/
+/wasm/Cargo.lock
 
